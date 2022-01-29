@@ -6,14 +6,16 @@ addpath(genpath('./'));
 %% dataset
 ds = {'Caltech101-20'};
 
+dsPath = './Dataset/';
 resPath = './res-lmd0/';
 metric = {'ACC','nmi','Purity','Fscore','Precision','Recall','AR','Entropy'};
 
 for dsi = 1
     % load data & make folder
     dataName = ds{dsi}; disp(dataName);
-    load(strcat(dataName));
+    load(strcat(dsPath,dataName));
     k = length(unique(Y));
+    
     
     matpath = strcat(resPath,dataName);
     txtpath = strcat(resPath,strcat(dataName,'.txt'));
@@ -24,9 +26,9 @@ for dsi = 1
     dlmwrite(txtpath, strcat('Dataset:',cellstr(dataName), '  Date:',datestr(now)),'-append','delimiter','','newline','pc');
     
     %% para setting
-    anchor = [k 2*k 3*k];
+    anchor = [k 2*k 3*k]; 
     d = k;
-    lambda = [1 0.1 0.01 0.001];
+    lambda = [1,0.1,0.01,0.001]; 
     
     %%
     for ichor = 1:length(anchor)

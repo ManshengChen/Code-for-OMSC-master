@@ -6,14 +6,13 @@ addpath(genpath('./'));
 %% dataset
 ds = {'Caltech101-20'};
 
-dsPath = './Dataset/';
 resPath = './res-lmd0/';
 metric = {'ACC','nmi','Purity','Fscore','Precision','Recall','AR','Entropy'};
 
 for dsi = 1
     % load data & make folder
     dataName = ds{dsi}; disp(dataName);
-    load(strcat(dsPath,dataName));
+    load(strcat(dataName));
     k = length(unique(Y));
     
     matpath = strcat(resPath,dataName);

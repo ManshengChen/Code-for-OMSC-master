@@ -36,7 +36,7 @@ while flag
     iter = iter + 1;
     
     %% optimize W_i
-    AZ = A*Z; % since each view share the same A and Z.
+    AZ = A*Z; 
     parfor iv=1:numview
         C = X{iv}*AZ';      
         [U,~,V] = svd(C,'econ');
@@ -52,16 +52,11 @@ while flag
         part1 = part1 + al2 * W{ia}' * X{ia} * Z';
     end
     [Unew,~,Vnew] = svd(part1,'econ');
-%     A = (part1/sumAlpha) * inv(Z*Z');
     A = Unew*Vnew';
-    % Replace inv(A)*b with A\b
-    % Replace b*inv(A) with b/A
     
     %% optimize Z
-    % % QP
     H = 2*sumAlpha*eye(m)+2*lambda*eye(m);
     H = (H+H')/2;
-
     options = optimset( 'Algorithm','interior-point-convex','Display','off'); % interior-point-convex
     parfor ji=1:numsample
         ff=0;
